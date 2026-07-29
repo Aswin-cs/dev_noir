@@ -1,26 +1,144 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: auto;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-hanken-grotesk), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+  --font-syncopate: var(--font-syncopate), sans-serif;
+  --font-syne: var(--font-syne), sans-serif;
+  --font-cinzel: var(--font-cinzel), serif;
+  --font-orbitron: var(--font-orbitron), sans-serif;
+  --font-hanken-grotesk: var(--font-hanken-grotesk), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.font-syncopate {
+  font-family: var(--font-syncopate);
+}
+
+.font-syne {
+  font-family: var(--font-syne);
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel);
+}
+
+.font-orbitron {
+  font-family: var(--font-orbitron);
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
   }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 20s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.animate-text-shimmer {
+  background-size: 200% auto;
+  animation: text-shimmer 5s linear infinite;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  user-select: none;
 }
+
+/* Minimalist Glassmorphism in Strict Black & White */
+.glass-dock {
+  background: rgba(20, 20, 25, 0.45);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.65), 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+    0 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.glass-dock-item {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-dock-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+/* ── Orb Animations ─────────────────────────── */
+@keyframes orb-drift {
+  0%, 100% { transform: translate(-50%, -50%) translate(0px, 0px); }
+  25%      { transform: translate(-50%, -50%) translate(60px, -40px); }
+  50%      { transform: translate(-50%, -50%) translate(-30px, 50px); }
+  75%      { transform: translate(-50%, -50%) translate(-50px, -30px); }
+}
+
+@keyframes orb-drift-reverse {
+  0%, 100% { transform: translate(-50%, -50%) translate(0px, 0px); }
+  25%      { transform: translate(-50%, -50%) translate(-50px, 30px); }
+  50%      { transform: translate(-50%, -50%) translate(40px, -50px); }
+  75%      { transform: translate(-50%, -50%) translate(30px, 40px); }
+}
+
+@keyframes orb-morph {
+  0%, 100% { border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%; }
+  25%      { border-radius: 40% 60% 55% 45% / 55% 40% 60% 45%; }
+  50%      { border-radius: 55% 45% 40% 60% / 45% 55% 50% 50%; }
+  75%      { border-radius: 50% 50% 60% 40% / 40% 50% 45% 55%; }
+}
+
+@keyframes orb-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.35; }
+  50%      { transform: scale(1.15); opacity: 0.55; }
+}
+
+@keyframes orb-glow-pulse {
+  0%, 100% { box-shadow: 0 0 80px 40px rgba(255, 255, 255, 0.03), 0 0 200px 80px rgba(161, 161, 170, 0.04); }
+  50%      { box-shadow: 0 0 120px 60px rgba(255, 255, 255, 0.06), 0 0 280px 120px rgba(161, 161, 170, 0.08); }
+}
+
+@keyframes orb-rotate {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
