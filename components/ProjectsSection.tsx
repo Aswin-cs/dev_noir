@@ -268,6 +268,8 @@ export function ProjectsSection() {
       const CARD_ENTER_TIME = 0.8;    // Smooth entrance from right
       const CARD_STEP = 0.85;         // Seamless continuous flow without stuck gaps
 
+      let lastActiveCardIndex = -1;
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: el,
@@ -276,7 +278,7 @@ export function ProjectsSection() {
           pin: true,
           pinSpacing: true,
           anticipatePin: 1, // Prevents pin jitter
-          scrub: 0.4, // Smooth momentum dampening for touch and wheel
+          scrub: 0.5, // Adds easing duration to smooth out touch drag micro-pixel recalculations
           onUpdate: (self) => {
             if (progressBarRef.current) {
               progressBarRef.current.style.width = `${self.progress * 100}%`;
@@ -284,10 +286,13 @@ export function ProjectsSection() {
             if (progressTextRef.current) {
               const stageVal = self.progress * totalCards;
               const currentActiveCard = Math.min(totalCards, Math.max(0, Math.floor(stageVal)));
-              if (currentActiveCard === 0) {
-                progressTextRef.current.innerText = `STAGE 1: OVERVIEW`;
-              } else {
-                progressTextRef.current.innerText = `CARD STACK ${currentActiveCard} OF ${totalCards}`;
+              if (currentActiveCard !== lastActiveCardIndex) {
+                lastActiveCardIndex = currentActiveCard;
+                if (currentActiveCard === 0) {
+                  progressTextRef.current.innerText = `STAGE 1: OVERVIEW`;
+                } else {
+                  progressTextRef.current.innerText = `CARD STACK ${currentActiveCard} OF ${totalCards}`;
+                }
               }
             }
           },

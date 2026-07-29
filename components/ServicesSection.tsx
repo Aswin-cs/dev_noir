@@ -155,7 +155,7 @@ export function ServicesSection() {
           end: "+=150%",
           pin: true,
           pinSpacing: true,
-          scrub: 0.4,
+          scrub: 0.5,
           anticipatePin: 1,
         },
       });

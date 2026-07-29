@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Monitor } from "lucide-react";
 
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -244,6 +244,12 @@ export function HeroSection() {
         <p className="text-sm sm:text-base md:text-lg text-zinc-400 max-w-xl font-light tracking-wide font-sans leading-relaxed">
           Minimalist digital architecture, motion visuals, and black &amp; white aesthetic.
         </p>
+
+        {/* Mobile PC Experience Recommendation Notice */}
+        <div className="md:hidden inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/15 backdrop-blur-md text-[11px] font-mono tracking-wider text-zinc-300 shadow-lg select-none">
+          <Monitor className="w-3.5 h-3.5 text-zinc-300 animate-pulse shrink-0" />
+          <span>Open on PC for the best interactive experience</span>
+        </div>
 
         {/* Scroll Down Indicator Button */}
         <button

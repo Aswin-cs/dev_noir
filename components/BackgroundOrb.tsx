@@ -8,42 +8,9 @@ export function BackgroundOrb() {
   const targetProgressRef = useRef(0);
   const currentProgressRef = useRef(0);
 
-  /* ── 1. Scroll Listener: Calculates Document Scroll Progress ── */
+  /* ── 1. Scroll Listener & On-Demand 60FPS Lerp Loop ── */
   useEffect(() => {
     let ticking = false;
-
-    const handleScroll = () => {
-      if (ticking) return;
-      ticking = true;
-
-      requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
-        const heroHeight = window.innerHeight;
-
-        // Hidden in Hero section; active from Services section onwards
-        if (scrollY >= heroHeight * 0.4) {
-          setIsActive(true);
-
-          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const scrollableDistance = Math.max(1, docHeight - heroHeight * 0.4);
-          const progress = Math.max(0, Math.min(1, (scrollY - heroHeight * 0.4) / scrollableDistance));
-          targetProgressRef.current = progress;
-        } else {
-          setIsActive(false);
-          targetProgressRef.current = 0;
-        }
-
-        ticking = false;
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  /* ── 2. Direct DOM 60FPS Lerp Animation Loop (Zero React Re-renders on Scroll) ── */
-  useEffect(() => {
     let animationFrameId: number;
 
     const updateOrbTransforms = () => {
@@ -69,11 +36,43 @@ export function BackgroundOrb() {
         orbRef.current.style.opacity = `${opacity}`;
       }
 
-      animationFrameId = requestAnimationFrame(updateOrbTransforms);
+      if (Math.abs(target - currentProgressRef.current) > 0.0001) {
+        animationFrameId = requestAnimationFrame(updateOrbTransforms);
+      } else {
+        ticking = false;
+      }
     };
 
-    animationFrameId = requestAnimationFrame(updateOrbTransforms);
-    return () => cancelAnimationFrame(animationFrameId);
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const heroHeight = window.innerHeight;
+
+      // Hidden in Hero section; active from Services section onwards
+      if (scrollY >= heroHeight * 0.4) {
+        setIsActive(true);
+
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollableDistance = Math.max(1, docHeight - heroHeight * 0.4);
+        const progress = Math.max(0, Math.min(1, (scrollY - heroHeight * 0.4) / scrollableDistance));
+        targetProgressRef.current = progress;
+      } else {
+        setIsActive(false);
+        targetProgressRef.current = 0;
+      }
+
+      if (!ticking) {
+        ticking = true;
+        animationFrameId = requestAnimationFrame(updateOrbTransforms);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   return (
@@ -93,7 +92,7 @@ export function BackgroundOrb() {
       >
         {/* Outer Radiant Ambient Color Aura */}
         <div
-          className="absolute inset-0 rounded-full"
+          className="absolute inset-0 rounded-full ambient-orb pointer-events-none"
           style={{
             background: "radial-gradient(circle, rgba(160,180,240,0.18) 0%, rgba(100,120,200,0.08) 50%, transparent 75%)",
             filter: "blur(90px)",
@@ -102,7 +101,7 @@ export function BackgroundOrb() {
 
         {/* Core Subtle Glass Ring with Soft Cyan-White Glow */}
         <div
-          className="relative w-full h-full rounded-full backdrop-blur-sm overflow-hidden"
+          className="relative w-full h-full rounded-full backdrop-blur-sm overflow-hidden glass-overlay pointer-events-none"
           style={{
             border: "1.5px solid rgba(255, 255, 255, 0.25)",
             boxShadow: `
@@ -118,7 +117,7 @@ export function BackgroundOrb() {
 
           {/* Internal Kinetic Core Pulse */}
           <div
-            className="absolute inset-0 opacity-40 animate-pulse"
+            className="absolute inset-0 opacity-40 animate-pulse pointer-events-none"
             style={{
               background: "radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0%, transparent 65%)",
               animationDuration: "4s",

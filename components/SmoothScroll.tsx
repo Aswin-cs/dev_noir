@@ -7,6 +7,28 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
+
+  // Prevent mobile browser address bar collapse/expansion from triggering layout jumps during scroll
+  ScrollTrigger.config({
+    ignoreMobileResize: true,
+  });
+
+  // Force all touchstart and touchmove event listeners to passive by default so browser does not block scrolling
+  const originalAddEventListener = EventTarget.prototype.addEventListener;
+  EventTarget.prototype.addEventListener = function (type, listener, options) {
+    if (type === "touchstart" || type === "touchmove") {
+      if (typeof options === "boolean") {
+        options = { capture: options, passive: true };
+      } else if (typeof options === "object" && options !== null) {
+        if (options.passive === undefined) {
+          options = { ...options, passive: true };
+        }
+      } else {
+        options = { passive: true };
+      }
+    }
+    return originalAddEventListener.call(this, type, listener, options);
+  };
 }
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
@@ -18,14 +40,13 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       ("ontouchstart" in window || navigator.maxTouchPoints > 0 || window.matchMedia("(max-width: 768px)").matches);
 
     const lenis = new Lenis({
-      duration: isTouchDevice ? 1.25 : 1.0,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Silky smooth exponential damping curve
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      syncTouch: true, // Enables touch inertia scrolling on mobile/touch screens
-      syncTouchLerp: 0.08, // Smooth lerp interpolation for mobile touch swipes
-      touchMultiplier: isTouchDevice ? 2.2 : 1.5,
+      syncTouch: false, // Keeps smooth scrolling for desktop, but lets mobile touch scroll natively
+      touchMultiplier: 1.5,
       wheelMultiplier: 1.0,
       autoResize: true,
     });
@@ -44,8 +65,8 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     };
 
     gsap.ticker.add(updateGSAP);
-    // Eliminate frame-skip jitter on mobile 60Hz and 120Hz ProMotion displays
-    gsap.ticker.lagSmoothing(0);
+    // Smooth out frame drops on mobile 60Hz and 120Hz ProMotion displays without violent position jumps
+    gsap.ticker.lagSmoothing(500, 33);
 
     return () => {
       gsap.ticker.remove(updateGSAP);

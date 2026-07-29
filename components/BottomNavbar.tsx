@@ -32,13 +32,21 @@ export function BottomNavbar() {
 
   /* ── Hide navbar when inside the pinned Services bars zone ── */
   useEffect(() => {
+    let ticking = false;
+
     const checkServicesZone = () => {
-      const servicesEl = document.getElementById("services");
-      if (!servicesEl) return;
-      const rect = servicesEl.getBoundingClientRect();
-      // If the services section top is at or above viewport top and bottom is below viewport
-      const isInZone = rect.top <= 0 && rect.bottom > window.innerHeight * 0.5;
-      setInServicesZone(isInZone);
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const servicesEl = document.getElementById("services");
+        if (servicesEl) {
+          const rect = servicesEl.getBoundingClientRect();
+          const isInZone = rect.top <= 0 && rect.bottom > window.innerHeight * 0.5;
+          setInServicesZone(isInZone);
+        }
+        ticking = false;
+      });
     };
 
     window.addEventListener("scroll", checkServicesZone, { passive: true });

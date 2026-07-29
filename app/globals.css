@@ -3,7 +3,7 @@
 html {
   scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: none;
+  overscroll-behavior-y: auto;
 }
 
 :root {
@@ -71,7 +71,7 @@ body {
   margin: 0;
   padding: 0;
   user-select: none;
-  touch-action: manipulation;
+  touch-action: pan-y;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -81,6 +81,26 @@ body {
   transform: translateZ(0);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+
+/* Touch Point Hit Testing on Glassmorphism / Heavy CSS (Prevents GPU re-compositing bottleneck on touch drag) */
+.hero-overlay,
+.backdrop-blur-bg,
+.decorative-noise,
+.ambient-orb,
+.vignette-overlay,
+.glass-overlay,
+.particle-layer {
+  pointer-events: none !important;
+}
+
+/* Mobile GPU performance optimization for touch scrolling */
+@media (max-width: 768px), (pointer: coarse) {
+  .backdrop-blur-bg,
+  .glass-overlay {
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
 }
 
 /* Custom Cursor Hiding Rule for Desktop Fine Pointer Devices */
