@@ -2,6 +2,8 @@
 
 html {
   scroll-behavior: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
 }
 
 :root {
@@ -69,6 +71,30 @@ body {
   margin: 0;
   padding: 0;
   user-select: none;
+  touch-action: manipulation;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Force hardware acceleration on mobile touch scroll layers */
+.will-change-transform {
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Custom Cursor Hiding Rule for Desktop Fine Pointer Devices */
+@media (pointer: fine) {
+  body,
+  a,
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea,
+  .cursor-pointer {
+    cursor: none !important;
+  }
 }
 
 /* Minimalist Glassmorphism in Strict Black & White */

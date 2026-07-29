@@ -97,7 +97,7 @@ export function KineticPromptStudio({
       {/* Title */}
       <h2
         ref={titleRef}
-        className="font-orbitron font-extrabold text-3xl sm:text-5xl text-center uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-500 mb-3 will-change-transform"
+        className="font-orbitron font-extrabold text-xl xs:text-3xl sm:text-5xl text-center uppercase tracking-wider sm:tracking-widest text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-500 mb-3 max-w-full px-2 will-change-transform"
       >
         CONNECT WITH DEV NOIR
       </h2>
@@ -119,6 +119,7 @@ export function KineticPromptStudio({
 
         {/* Instagram Link Card (Authentic Instagram Color Theme + 3D Magnetic Hover) */}
         <a
+          data-cursor-text="FOLLOW"
           href="https://instagram.com/dev_noir_"
           target="_blank"
           rel="noopener noreferrer"
@@ -131,15 +132,15 @@ export function KineticPromptStudio({
               : "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)",
             transformStyle: "preserve-3d",
           }}
-          className="w-full py-4 px-6 rounded-2xl bg-gradient-to-tr from-[#fbad50] via-[#e1306c] to-[#833ab4] text-white font-mono text-sm transition-all duration-300 ease-out flex items-center justify-between group cursor-pointer shadow-[0_0_30px_rgba(225,48,108,0.4)] hover:shadow-[0_0_50px_rgba(225,48,108,0.8)] relative overflow-hidden"
+          className="w-full py-3.5 sm:py-4 px-4 sm:px-6 rounded-2xl bg-gradient-to-tr from-[#fbad50] via-[#e1306c] to-[#833ab4] text-white font-mono text-sm transition-all duration-300 ease-out flex items-center justify-between group cursor-pointer shadow-[0_0_30px_rgba(225,48,108,0.4)] hover:shadow-[0_0_50px_rgba(225,48,108,0.8)] relative overflow-hidden"
         >
           {/* Laser Sheen Sweep Effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
 
           <div className="flex items-center gap-3.5 relative z-10">
-            <div className="p-2.5 rounded-xl bg-white/20 backdrop-blur-md text-white group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-inner border border-white/20">
+            <div className="p-2 sm:p-2.5 rounded-xl bg-white/20 backdrop-blur-md text-white group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-inner border border-white/20 shrink-0">
               <svg
-                className="w-6 h-6 stroke-current fill-none transition-transform duration-300"
+                className="w-5 h-5 sm:w-6 sm:h-6 stroke-current fill-none transition-transform duration-300"
                 viewBox="0 0 24 24"
                 strokeWidth="2"
                 strokeLinecap="round"
@@ -150,7 +151,7 @@ export function KineticPromptStudio({
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
               </svg>
             </div>
-            <div className="text-left">
+            <div className="hidden sm:block text-left">
               <span className="text-[10px] uppercase font-mono text-white/80 block tracking-widest font-semibold group-hover:text-white transition-colors">
                 Official Instagram
               </span>
@@ -160,9 +161,9 @@ export function KineticPromptStudio({
             </div>
           </div>
 
-          <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 text-xs font-mono text-white group-hover:bg-white group-hover:text-zinc-950 transition-all duration-300 shadow-md relative z-10 font-bold group-hover:shadow-white/20">
+          <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-white/20 backdrop-blur-md border border-white/30 text-xs font-mono text-white group-hover:bg-white group-hover:text-zinc-950 transition-all duration-300 shadow-md relative z-10 font-bold group-hover:shadow-white/20 shrink-0">
             <span>Follow</span>
-            <ArrowUpRight className="w-4 h-4 text-white group-hover:text-zinc-950 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+            <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white group-hover:text-zinc-950 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
           </div>
         </a>
 

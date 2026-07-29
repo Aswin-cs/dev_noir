@@ -104,14 +104,14 @@ function ServiceFontMorphBar({
       <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-black group-hover:via-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
 
       {/* ── Font Family Morph Container (DEV NOIR Architectural Theme) ── */}
-      <div className="relative z-10 flex items-center justify-center select-none w-full py-2">
+      <div className="relative z-10 flex items-center justify-center select-none w-full py-1 sm:py-2">
         {/* Font 1 (Default): Futuristic Orbitron Geometric Sans */}
-        <h3 className="font-orbitron font-extrabold text-[clamp(13px,2.8vh,28px)] sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-[0.1em] text-black transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-95 group-hover:-translate-y-2 pointer-events-none">
+        <h3 className="font-orbitron font-extrabold text-[clamp(11px,2.2vh,24px)] sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-[0.04em] sm:tracking-[0.1em] text-black transition-all duration-300 ease-out group-hover:opacity-0 group-hover:scale-95 group-hover:-translate-y-2 pointer-events-none truncate max-w-full px-1">
           {serviceName}
         </h3>
 
         {/* Font 2 (Hover): Syncopate Architectural Extended Luxury Sans */}
-        <h3 className="absolute font-syncopate font-bold text-[clamp(12px,2.5vh,26px)] sm:text-lg md:text-xl lg:text-2xl uppercase tracking-[0.22em] text-white transition-all duration-300 ease-out opacity-0 scale-105 translate-y-2 group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0 drop-shadow-[0_0_16px_rgba(255,255,255,0.6)] pointer-events-none">
+        <h3 className="absolute font-syncopate font-bold text-[clamp(10px,2.0vh,22px)] sm:text-lg md:text-xl lg:text-2xl uppercase tracking-[0.06em] sm:tracking-[0.22em] text-white transition-all duration-300 ease-out opacity-0 scale-105 translate-y-2 group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0 drop-shadow-[0_0_16px_rgba(255,255,255,0.6)] pointer-events-none truncate max-w-full px-1">
           {serviceName}
         </h3>
       </div>
@@ -155,7 +155,7 @@ export function ServicesSection() {
           end: "+=150%",
           pin: true,
           pinSpacing: true,
-          scrub: 0.6,
+          scrub: 0.4,
           anticipatePin: 1,
         },
       });
@@ -319,7 +319,7 @@ export function ServicesSection() {
         {/* Main heading */}
         <h2
           ref={headingTextRef}
-          className="font-orbitron font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl uppercase tracking-[0.3em] text-white drop-shadow-[0_0_60px_rgba(255,255,255,0.15)] leading-none text-center select-none will-change-transform"
+          className="font-orbitron font-black text-3xl xs:text-4xl sm:text-7xl md:text-8xl lg:text-9xl uppercase tracking-[0.08em] xs:tracking-[0.16em] sm:tracking-[0.3em] text-white drop-shadow-[0_0_60px_rgba(255,255,255,0.15)] leading-none text-center select-none max-w-full px-2 will-change-transform"
           style={{ transformStyle: "preserve-3d" }}
         >
           SERVICES

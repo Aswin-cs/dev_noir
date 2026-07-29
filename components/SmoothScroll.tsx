@@ -13,14 +13,21 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    const isTouchDevice =
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window || navigator.maxTouchPoints > 0 || window.matchMedia("(max-width: 768px)").matches);
+
     const lenis = new Lenis({
-      duration: 1.0, // Responsive 1.0s duration to eliminate scroll input delay
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential fast-start, smooth-stop curve
+      duration: isTouchDevice ? 1.25 : 1.0,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Silky smooth exponential damping curve
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
+      syncTouch: true, // Enables touch inertia scrolling on mobile/touch screens
+      syncTouchLerp: 0.08, // Smooth lerp interpolation for mobile touch swipes
+      touchMultiplier: isTouchDevice ? 2.2 : 1.5,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
+      autoResize: true,
     });
 
     lenisRef.current = lenis;
@@ -28,16 +35,17 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       (window as any).lenis = lenis;
     }
 
-    lenis.on("scroll", () => {
-      ScrollTrigger.update();
-    });
+    // Connect Lenis scroll updates to GSAP ScrollTrigger
+    lenis.on("scroll", ScrollTrigger.update);
 
+    // Synchronize Lenis animation frames with GSAP Ticker
     const updateGSAP = (time: number) => {
       lenis.raf(time * 1000);
     };
 
     gsap.ticker.add(updateGSAP);
-    gsap.ticker.lagSmoothing(1000, 16);
+    // Eliminate frame-skip jitter on mobile 60Hz and 120Hz ProMotion displays
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
       gsap.ticker.remove(updateGSAP);

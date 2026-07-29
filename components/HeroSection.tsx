@@ -173,11 +173,11 @@ export function HeroSection() {
           ref={titleRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="font-orbitron font-bold text-6xl xs:text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[11.5rem] tracking-wider uppercase leading-none select-none cursor-pointer flex items-center justify-center transition-all duration-300 py-2"
+          className="font-orbitron font-bold text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] xl:text-[11.5rem] tracking-wider uppercase leading-none select-none cursor-pointer flex items-center justify-center transition-all duration-300 py-2 max-w-full px-2"
         >
           {letters.map((char, index) => {
             if (char === " ") {
-              return <span key={index} className="w-4 sm:w-8 lg:w-12 inline-block">&nbsp;</span>;
+              return <span key={index} className="w-2 sm:w-6 lg:w-12 inline-block">&nbsp;</span>;
             }
 
             let translateY = 0;
@@ -247,6 +247,7 @@ export function HeroSection() {
 
         {/* Scroll Down Indicator Button */}
         <button
+          data-cursor-text="EXPLORE"
           onClick={() => {
             const lenis = typeof window !== "undefined" ? (window as any).lenis : null;
             if (lenis) {

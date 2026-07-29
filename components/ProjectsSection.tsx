@@ -175,6 +175,7 @@ function ExploreProjectButton({ href }: { href: string }) {
 
   return (
     <a
+      data-cursor-text="GO"
       href={href}
       target="_blank"
       rel="noopener noreferrer"
@@ -183,7 +184,7 @@ function ExploreProjectButton({ href }: { href: string }) {
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerLeave}
       onPointerCancel={handlePointerLeave}
-      className={`group/btn relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black text-sm font-orbitron font-extrabold uppercase tracking-widest transition-all duration-300 ease-out overflow-hidden hover:text-white cursor-pointer border border-white select-none ${
+      className={`group/btn relative inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-8 py-2.5 sm:py-4 rounded-full bg-white text-black text-xs sm:text-sm font-orbitron font-extrabold uppercase tracking-wider sm:tracking-widest transition-all duration-300 ease-out overflow-hidden hover:text-white cursor-pointer border border-white select-none ${
         isPressureActive
           ? "scale-90 bg-white text-black shadow-[0_0_80px_rgba(255,255,255,1)] ring-4 ring-white/70"
           : isPressing
@@ -275,7 +276,7 @@ export function ProjectsSection() {
           pin: true,
           pinSpacing: true,
           anticipatePin: 1, // Prevents pin jitter
-          scrub: 0.6, // Smooth momentum dampening
+          scrub: 0.4, // Smooth momentum dampening for touch and wheel
           onUpdate: (self) => {
             if (progressBarRef.current) {
               progressBarRef.current.style.width = `${self.progress * 100}%`;
@@ -427,7 +428,7 @@ export function ProjectsSection() {
                   setIsHovered(false);
                   setMousePos({ x: 0, y: 0 });
                 }}
-                className="font-orbitron font-extrabold text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl uppercase tracking-[0.2em] flex items-center justify-center cursor-pointer py-1 transition-transform duration-300 ease-out"
+                className="font-orbitron font-extrabold text-3xl xs:text-4xl sm:text-7xl md:text-8xl lg:text-9xl uppercase tracking-[0.08em] xs:tracking-[0.14em] sm:tracking-[0.2em] flex items-center justify-center cursor-pointer py-1 transition-transform duration-300 ease-out max-w-full px-2"
                 style={{
                   transform: isHovered
                     ? `perspective(1400px) rotateY(${mousePos.x * 24}deg) rotateX(${-mousePos.y * 24}deg) scale(1.02)`
@@ -525,18 +526,18 @@ export function ProjectsSection() {
               </div>
 
               {/* Card Foreground Content Overlay */}
-              <div className="relative z-10 w-full h-full p-8 sm:p-12 lg:p-16 flex flex-col justify-between pointer-events-none">
+              <div className="relative z-10 w-full h-full p-4 sm:p-10 lg:p-16 flex flex-col justify-between pointer-events-none">
                 
                 {/* Top Row Controls & Floating Category Pill */}
-                <div className="flex items-center justify-between gap-4 pointer-events-auto">
+                <div className="flex items-center justify-between gap-2 sm:gap-4 pointer-events-auto">
                   {/* Floating Category Badge */}
-                  <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-black/70 border border-white/25 backdrop-blur-md shadow-2xl shrink-0 whitespace-nowrap">
-                    <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse shrink-0" />
-                    <span className="text-xs sm:text-sm font-mono tracking-[0.2em] text-white font-semibold uppercase">
+                  <div className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-full bg-black/70 border border-white/25 backdrop-blur-md shadow-2xl shrink-0 whitespace-nowrap">
+                    <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-white animate-pulse shrink-0" />
+                    <span className="text-[10px] sm:text-sm font-mono tracking-[0.1em] sm:tracking-[0.2em] text-white font-semibold uppercase">
                       {project.category}
                     </span>
-                    <span className="text-zinc-500 text-xs">•</span>
-                    <span className="text-xs sm:text-sm font-mono text-zinc-300">
+                    <span className="text-zinc-500 text-[10px] sm:text-xs">•</span>
+                    <span className="text-[10px] sm:text-sm font-mono text-zinc-300">
                       0{idx + 1} / 0{filteredProjects.length}
                     </span>
                   </div>
@@ -546,6 +547,7 @@ export function ProjectsSection() {
 
 
                     <button
+                      data-cursor-text="VIEW"
                       onClick={() => setActiveModalProject(project)}
                       title="View Details"
                       className="group/eye relative p-3.5 rounded-full bg-black/70 border border-white/25 text-zinc-200 hover:text-black hover:bg-white transition-all duration-500 ease-out backdrop-blur-md cursor-pointer shadow-2xl hover:shadow-[0_0_30px_rgba(255,255,255,0.75)] hover:scale-115 active:scale-95 overflow-hidden border-white"
@@ -567,7 +569,7 @@ export function ProjectsSection() {
                     </div>
 
                     {/* Giant Stylish Title */}
-                    <h3 className="font-orbitron font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-8xl uppercase tracking-wider text-white drop-shadow-[0_6px_30px_rgba(0,0,0,0.95)] leading-none mb-4">
+                    <h3 className="font-orbitron font-extrabold text-2xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl uppercase tracking-wider text-white drop-shadow-[0_6px_30px_rgba(0,0,0,0.95)] leading-none mb-2 sm:mb-4">
                       {project.title}
                     </h3>
 
