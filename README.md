@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="./public/logo_white.svg" alt="DEV NOIR Logo" width="320" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./public/logo_white.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./public/logo.svg" />
+    <img src="./public/logo_white.svg" alt="DEV NOIR Logo" width="320" />
+  </picture>
 </p>
 
 <h1 align="center">DEV NOIR STUDIO</h1>
