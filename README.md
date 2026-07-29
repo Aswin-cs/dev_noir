@@ -1,8 +1,8 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./public/logo_white.svg" />
-    <source media="(prefers-color-scheme: light)" srcset="./public/logo.svg" />
-    <img src="./public/logo_white.svg" alt="DEV NOIR Logo" width="320" />
+    <source media="(prefers-color-scheme: dark)" srcset="./public/logo.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="./public/logo_white.svg" />
+    <img src="./public/logo.svg" alt="DEV NOIR Logo" width="320" />
   </picture>
 </p>
 
